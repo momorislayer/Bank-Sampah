@@ -1,0 +1,422 @@
+{
+	"info": {
+		"_postman_id": "bank-sampah-desa-v2",
+		"name": "Bank Sampah Desa API (v1 & v2)",
+		"description": "Koleksi API Lengkap untuk Web Bank Sampah Desa Fase 1 (MVP) & Fase 2 (Laporan, Penjemputan, Stok, Penjualan Pengepul, Notifikasi, Artikel)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8000/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"identifier\": \"081234567890\",\n  \"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Login (Petugas)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"identifier\": \"081234567891\",\n  \"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Login (Nasabah via No Rekening)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"identifier\": \"BS-0001\",\n  \"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Get Profile (Me)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/me",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "me"]
+						}
+					}
+				},
+				{
+					"name": "Register Nasabah Mandiri",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nama\": \"Warga Mandiri\",\n  \"no_hp\": \"089876543210\",\n  \"email\": \"mandiri@warga.desa\",\n  \"password\": \"password123\",\n  \"alamat\": \"RT 05 / RW 02\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "register"]
+						}
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "logout"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Publik",
+			"item": [
+				{
+					"name": "Daftar Harga Sampah",
+					"request": {
+						"method": "GET",
+						"header": [{ "key": "Accept", "value": "application/json" }],
+						"url": {
+							"raw": "{{baseUrl}}/public/harga-sampah",
+							"host": ["{{baseUrl}}"],
+							"path": ["public", "harga-sampah"]
+						}
+					}
+				},
+				{
+					"name": "Daftar Artikel",
+					"request": {
+						"method": "GET",
+						"header": [{ "key": "Accept", "value": "application/json" }],
+						"url": {
+							"raw": "{{baseUrl}}/public/artikel",
+							"host": ["{{baseUrl}}"],
+							"path": ["public", "artikel"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Nasabah (/me)",
+			"item": [
+				{
+					"name": "Dashboard Nasabah",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/me/dashboard",
+							"host": ["{{baseUrl}}"],
+							"path": ["me", "dashboard"]
+						}
+					}
+				},
+				{
+					"name": "Riwayat Setoran",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/me/setoran",
+							"host": ["{{baseUrl}}"],
+							"path": ["me", "setoran"]
+						}
+					}
+				},
+				{
+					"name": "Riwayat Mutasi Saldo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/me/mutasi",
+							"host": ["{{baseUrl}}"],
+							"path": ["me", "mutasi"]
+						}
+					}
+				},
+				{
+					"name": "Ajukan Penarikan Tunai",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"jumlah\": 20000,\n  \"catatan\": \"Untuk keperluan belanja\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/me/penarikan",
+							"host": ["{{baseUrl}}"],
+							"path": ["me", "penarikan"]
+						}
+					}
+				},
+				{
+					"name": "Ajukan Penjemputan Sampah",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"alamat\": \"RT 02 RW 01 Desa Sukamaju\",\n  \"jadwal\": \"2026-11-20 09:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/me/penjemputan",
+							"host": ["{{baseUrl}}"],
+							"path": ["me", "penjemputan"]
+						}
+					}
+				},
+				{
+					"name": "Daftar Notifikasi",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/me/notifikasi",
+							"host": ["{{baseUrl}}"],
+							"path": ["me", "notifikasi"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Petugas",
+			"item": [
+				{
+					"name": "Cari Nasabah",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/nasabah?search=budi",
+							"host": ["{{baseUrl}}"],
+							"path": ["nasabah"],
+							"query": [{ "key": "search", "value": "budi" }]
+						}
+					}
+				},
+				{
+					"name": "Input Setoran Baru",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nasabah_id\": 1,\n  \"catatan\": \"Setoran sampah rutin mingguan\",\n  \"items\": [\n    {\n      \"jenis_sampah_id\": 1,\n      \"berat\": 3.5\n    },\n    {\n      \"jenis_sampah_id\": 4,\n      \"berat\": 5.0\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/setoran",
+							"host": ["{{baseUrl}}"],
+							"path": ["setoran"]
+						}
+					}
+				},
+				{
+					"name": "Rekap Setoran Harian",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/rekap/harian?tanggal=2026-11-09",
+							"host": ["{{baseUrl}}"],
+							"path": ["rekap", "harian"]
+						}
+					}
+				},
+				{
+					"name": "Kelola Penjemputan",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/penjemputan?status=menunggu",
+							"host": ["{{baseUrl}}"],
+							"path": ["penjemputan"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Dashboard Admin",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/dashboard",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin", "dashboard"]
+						}
+					}
+				},
+				{
+					"name": "Stok Sampah Terkini",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/stok",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin", "stok"]
+						}
+					}
+				},
+				{
+					"name": "Catat Penjualan ke Pengepul",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"pengepul_id\": 1,\n  \"items\": [\n    {\n      \"jenis_sampah_id\": 1,\n      \"berat\": 10,\n      \"harga\": 4500\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/penjualan",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin", "penjualan"]
+						}
+					}
+				},
+				{
+					"name": "Laporan Setoran",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/laporan/setoran",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin", "laporan", "setoran"]
+						}
+					}
+				},
+				{
+					"name": "Ekspor Laporan CSV",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/laporan/saldo-beredar/export",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin", "laporan", "saldo-beredar", "export"]
+						}
+					}
+				}
+			]
+		}
+	]
+}
